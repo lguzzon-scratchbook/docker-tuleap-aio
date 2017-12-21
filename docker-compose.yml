@@ -5,7 +5,7 @@ services:
     image: enalean/tuleap-aio
     restart: unless-stopped
     environment:
-      VIRTUAL_HOST: "${VIRTUAL_HOST:-localhost}"
+      VIRTUAL_HOST: "${VIRTUAL_HOST}"
       DB_HOST: "db"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     volumes:
