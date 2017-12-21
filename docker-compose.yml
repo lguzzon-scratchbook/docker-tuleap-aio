@@ -10,9 +10,13 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     volumes:
       - tuleap-data:/data
-    ports:
-      - 1080:80
-      - 10443:443
+    networks:
+      - proxy
+      - default    
+    labels:
+      - com.df.notify=true
+      - com.df.distribute=true
+      - com.df.serviceDomain=tuleap.app.lucaguzzon.com
     depends_on:
       - db
 
@@ -24,7 +28,15 @@ services:
       - ./sql_mode.cnf:/etc/mysql/conf.d/sql_mode.cnf
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-
+    networks:
+      - default
+      
 volumes:
   tuleap-db-data:
   tuleap-data:
+
+networks:
+  default:
+    external: false
+  proxy:
+    external: true
