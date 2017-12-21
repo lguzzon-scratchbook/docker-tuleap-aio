@@ -7,25 +7,24 @@ services:
     environment:
       VIRTUAL_HOST: "${VIRTUAL_HOST:-localhost}"
       DB_HOST: "db"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-ChangeMe}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     volumes:
       - tuleap-data:/data
-#      - ~/workspace/tuleap:/usr/share/tuleap
     ports:
-      - 80:80
-      - 443:443
+      - 1080:80
+      - 10443:443
     depends_on:
       - db
 
   db:
-    image: mysql:5.6
+    image: mysql:latest
     restart: unless-stopped
     volumes:
-      - db-data:/var/lib/mysql
+      - tuleap-db-data:/var/lib/mysql
       - ./sql_mode.cnf:/etc/mysql/conf.d/sql_mode.cnf
     environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-ChangeMe}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
 
 volumes:
-  db-data:
+  tuleap-db-data:
   tuleap-data:
